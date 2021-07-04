@@ -1,10 +1,12 @@
 <x-guest-layout>
     <x-auth-card>
-        admin login
+        管理者用 ログイン
         <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 text-gray-500 fill-current" />
-            </a>
+            <div class="w-28">
+                <a href="/">
+                    <x-application-logo class="w-20 h-20 text-gray-500 fill-current" />
+                </a>
+            </div>
         </x-slot>
 
         <!-- Session Status -->
