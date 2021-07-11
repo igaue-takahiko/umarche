@@ -23,15 +23,16 @@ class OwnersController extends Controller
     {
         // $date_new = Carbon::now();
         // $date_parse = Carbon::parse(now());
-        $e_all = Owner::all();
-        $q_get = DB::table('owners')->select('name', 'created_at')->get();
+        // $e_all = Owner::all();
+        // $q_get = DB::table('owners')->select('name', 'created_at')->get();
         // $q_first = DB::table('owners')->select('name')->first();
 
         // $c_test = collect([
         //     'name' => 'test'
         // ]);
         // dd($e_all, $q_get, $q_first, $c_test);
-        return view('admin.owners.index', compact('q_get', 'e_all'));
+        $owners = Owner::select('name', 'email', 'created_at')->get();
+        return view('admin.owners.index', compact('owners'));
     }
 
     /**
@@ -41,7 +42,7 @@ class OwnersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.owners.create');
     }
 
     /**
