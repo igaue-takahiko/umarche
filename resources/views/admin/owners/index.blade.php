@@ -22,7 +22,7 @@
                                             <th class="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 rounded-tl rounded-bl title-font">名前</th>
                                             <th class="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 title-font">メールアドレス</th>
                                             <th class="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 title-font">作成日</th>
-                                            <th class="w-10 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 rounded-tr rounded-br title-font"></th>
+                                            <th class="px-4 py-3 text-sm font-medium tracking-wider text-gray-900 bg-gray-100 rounded-tr rounded-br title-font"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -31,8 +31,8 @@
                                                 <td class="px-4 py-3">{{ $owner->name }}</td>
                                                 <td class="px-4 py-3">{{ $owner->email }}</td>
                                                 <td class="px-4 py-3 text-lg text-gray-900">{{ $owner->created_at->diffForHumans() }}</td>
-                                                <td class="w-10 text-center">
-                                                    <input name="plan" type="radio">
+                                                <td class="px-4 py-3">
+                                                    <button onclick="location.href = '{{ route('admin.owners.edit', [ 'owner' => $owner->id ]) }}'" class="px-4 py-2 text-white bg-blue-600 border-0 rounded focus:outline-none hover:bg-blue-700">編集</button>
                                                 </td>
                                             </tr>
                                         @endforeach
