@@ -35,6 +35,12 @@
                                         </div>
                                         <div class="w-1/2 p-2 mx-auto">
                                             <div class="relative">
+                                                <label for="shop" class="text-sm leading-7 text-gray-600">店名</label>
+                                                <div class="w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 rounded outline-none focus:bg-white focus:ring-2 focus:ring-blue-200">{{ $owner->shop->name }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="w-1/2 p-2 mx-auto">
+                                            <div class="relative">
                                                 <label for="password" class="text-sm leading-7 text-gray-600">パスワード</label>
                                                 <input type="password" id="password" name="password" required class="w-full px-3 py-1 text-base leading-8 text-gray-700 transition-colors duration-200 ease-in-out bg-gray-100 bg-opacity-50 border border-gray-300 rounded outline-none focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200">
                                             </div>
