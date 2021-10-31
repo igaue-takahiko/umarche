@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use InterventionImage;
 use App\Http\Requests\UploadImageRequest;
+use App\Services\ImageService;
 
 class ShopController extends Controller
 {
@@ -16,7 +17,7 @@ class ShopController extends Controller
     {
         $this->middleware('auth:owners');
 
-        $this->middleware(function($request, $next) {
+        $this->middleware(function ($request, $next) {
             // dd($request->route()->parameter('shop')); //文字列
             // dd(Auth::id());// 数値
 
@@ -59,6 +60,7 @@ class ShopController extends Controller
     public function edit($id)
     {
         $shop = Shop::findOrFail($id);
+        // dd($shop);
         return view('owner.shops.edit', compact('shop'));
     }
 
@@ -71,19 +73,36 @@ class ShopController extends Controller
      */
     public function update(UploadImageRequest $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'information' => 'required|string|max:1000',
+            'is_selling' => 'required',
+        ]);
+
         $imageFile = $request->image;
         if (!is_null($imageFile) && $imageFile->isValid()) {
             // Storage::putFile('public/shops/', $imageFile); // リサイズなしの場合の処理
 
-            $fileName = uniqid(rand() . '_');
-            $extension = $imageFile->extension();
-            $fileNameToStore = $fileName . '.' . $extension;
-            $resizedImage = InterventionImage::make($imageFile)->resize(1920, 1080)->encode();
-
-            Storage::put('public/shops/' . $fileNameToStore, $resizedImage);
+            $fileNameToStore = ImageService::upload($imageFile, 'shops');
+            // dd($fileNameToStore);
         }
 
-        return redirect()->route('owner.shops.index');
+        $shop = Shop::findOrFail($id);
+        $shop->name = $request->name;
+        $shop->information = $request->information;
+        $shop->is_selling = $request->is_selling;
+        if (!is_null($imageFile) && $imageFile->isValid()) {
+            $shop->filename = $fileNameToStore;
+        }
+
+        $shop->save();
+
+        return redirect()
+            ->route('owner.shops.index')
+            ->with([
+                'message' => '店舗情報を更新しました。',
+                'status' => 'info',
+            ]);
     }
 
     /**
@@ -94,7 +113,5 @@ class ShopController extends Controller
      */
     public function destroy($id)
     {
-
     }
-
 }

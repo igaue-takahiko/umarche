@@ -25,6 +25,7 @@ class UploadImageRequest extends FormRequest
     {
         return [
             'image' => 'image|mimes:png,jpg,jpeg|max:2048',
+            'files.*.image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ];
     }
 
@@ -33,7 +34,7 @@ class UploadImageRequest extends FormRequest
         return [
             'image' => '指定されたファイルが画像ではありません。',
             'mimes' => '指定された拡張子（jpg/jpeg/png）ではありません。',
-            'max' => 'ファイスサイズ２BM以内してください。'
+            'max' => 'ファイスサイズを２MB以内してください。'
         ];
     }
 }
