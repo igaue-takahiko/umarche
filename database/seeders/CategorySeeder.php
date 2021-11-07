@@ -41,7 +41,7 @@ class CategorySeeder extends Seeder
                 'primary_category_id' => 1
             ],
             [
-                'name' => 'バック',
+                'name' => 'バッグ・ランドセル',
                 'sort_order' => 3,
                 'primary_category_id' => 1
             ],
@@ -51,8 +51,13 @@ class CategorySeeder extends Seeder
                 'primary_category_id' => 2
             ],
             [
-                'name' => 'メモリアル記念品',
+                'name' => 'メモリアル・記念品',
                 'sort_order' => 5,
+                'primary_category_id' => 2
+            ],
+            [
+                'name' => 'おむつケーキ',
+                'sort_order' => 6,
                 'primary_category_id' => 2
             ],
         ]);
