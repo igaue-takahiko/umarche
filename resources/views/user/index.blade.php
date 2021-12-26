@@ -7,11 +7,11 @@
             <div class="lg:flex lg:justify-around">
                 <div class="items-center lg:flex">
                     <select name="category" class="mb-2 lg:mb-0 lg:mr-2">
-                        <option value="0" @if (\Request::get('category') === '0') selected @endif>全て</option>
+                        <option value="0" @if (Request::get('category') === '0') selected @endif>全て</option>
                         @foreach ($categories as $category)
                             <optgroup label="{{ $category->name }}">
                                 @foreach ($category->secondary as $secondary)
-                                    <option value="{{ $secondary->id }}" @if (\Request::get('category') == $secondary->id) selected @endif>
+                                    <option value="{{ $secondary->id }}" @if (Request::get('category') == $secondary->id) selected @endif>
                                         {{ $secondary->name }}
                                     </option>
                                 @endforeach
@@ -34,21 +34,11 @@
                         <span class="text-sm">表示順</span>
                         <br>
                         <select id="sort" name="sort" class="mr-4">
-                            <option value="{{ \Constant::SORT_ORDER['recommend'] }}" @if (\Request::get('sort') === \Constant::SORT_ORDER['recommend']) selected @endif>
-                                おすすめ順
-                            </option>
-                            <option value="{{ \Constant::SORT_ORDER['higherPrice'] }}" @if (\Request::get('sort') === \Constant::SORT_ORDER['higherPrice']) selected @endif>
-                                料金の高い順
-                            </option>
-                            <option value="{{ \Constant::SORT_ORDER['lowerPrice'] }}" @if (\Request::get('sort') === \Constant::SORT_ORDER['lowerPrice']) selected @endif>
-                                料金の安い順
-                            </option>
-                            <option value="{{ \Constant::SORT_ORDER['later'] }}" @if (\Request::get('sort') === \Constant::SORT_ORDER['later']) selecte @endif>
-                                新しい順
-                            </option>
-                            <option value="{{ \Constant::SORT_ORDER['older'] }}" @if (\Request::get('sort') === \Constant::SORT_ORDER['older']) selected @endif>
-                                古い順
-                            </option>
+                            @foreach ($sortLabels as $value => $label)
+                                <option value="{{ $value }}" {{ $value === Request::get('sort') ? 'selected' : '' }}>
+                                    {{ $label }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
                     <div>
@@ -89,9 +79,10 @@
                                             <h2 class="text-lg font-medium text-gray-900 title-font">
                                                 {{ $product->name }}
                                             </h2>
-                                            <p class="mt-1">{{ number_format($product->price) }}<span
-                                                    class="text-sm text-gray-700">円(税込)</span>
-                                                </p>
+                                            <p class="mt-1">
+                                                {{ number_format($product->price) }}
+                                                <span class="text-sm text-gray-700">円(税込)</span>
+                                            </p>
                                         </div>
                                     </div>
                                 </a>
@@ -99,12 +90,12 @@
                         @endforeach
 
                     </div>
-                    {{-- {{
+                    {{
                         $products->appends([
                             'sort' => \Request::get('sort'),
                             'pagination' => \Request::get('pagination'),
                         ])->links()
-                    }} --}}
+                    }}
                 </div>
             </div>
         </div>

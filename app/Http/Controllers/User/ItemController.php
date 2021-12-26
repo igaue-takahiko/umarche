@@ -4,9 +4,12 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Product;
 use App\Models\Stock;
 use App\Models\PrimaryCategory;
+use App\Mail\TestMail;
+use App\Jobs\SendThanksMail;
 use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
@@ -48,11 +51,20 @@ class ItemController extends Controller
             ->sortOrder($request->sort)
             ->paginate($request->pagination ?? '20');
 
+        $sortLabels = [
+            \Constant::SORT_ORDER['recommend'] => 'おすすめ順',
+            \Constant::SORT_ORDER['higherPrice'] => '料金の高い順',
+            \Constant::SORT_ORDER['lowerPrice'] => '料金の安い順',
+            \Constant::SORT_ORDER['later'] => '新しい順',
+            \Constant::SORT_ORDER['older'] => '古い順',
+        ];
+
         return view(
             'user.index',
             compact(
                 'products',
-                'categories'
+                'categories',
+                'sortLabels',
             )
         );
     }
